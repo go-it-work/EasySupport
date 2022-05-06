@@ -26,7 +26,6 @@ public class FinishOrder : MonoBehaviour
     {
         ChangeMaintenanceOrderSituation(GetTime());
         PublishOperations();
-        PublishOrderAndOperationResult();
         SceneManager.LoadScene("SelectionMenu");
     }
 
@@ -56,28 +55,6 @@ public class FinishOrder : MonoBehaviour
         command.ExecuteNonQuery();
     }
 
-    private void PublishOrderAndOperationResult()
-    {
-        using SqlConnection sqlConnetion = new SqlConnection(ConnectionString.stringBuilder.ConnectionString);
-        sqlConnetion.Open();
-
-        foreach(Operations op in StartOrder.operationsList)
-        {
-            Debug.Log("Publicando operação: " + op.OperationCode);
-            Debug.Log("Publicando dentro da OM: " + StartOrder.ActiveOrder.OrderCode);
-
-            string sql = "INSERT INTO OrdensDeManutencaoOperacaoResultados VALUES(@opCode, @omCode, 1)";
-
-            using SqlCommand sqlCommand = new SqlCommand(sql, sqlConnetion);
-            sqlCommand.Parameters.AddWithValue("@omCode", StartOrder.ActiveOrder.OrderCode);
-            sqlCommand.Parameters.AddWithValue("@opCode", op.OperationCode);
-
-            sqlCommand.ExecuteNonQuery();
-        }
-
-        sqlConnetion.Close();
-    }
-
     private void PublishOperations()
     {
         // Connecting to database
@@ -88,7 +65,7 @@ public class FinishOrder : MonoBehaviour
         {
             // Publish Operations from ActiveOrder
             string sql =
-                "INSERT INTO OperacoesResultados(cod_operacaoResultado, instrucao, ocr, ocrParametro, qrcode, qrcodeParametro, medicao, medicaoParametro, resultado, status_aprovacao, status) VALUES (@OpCode, @Instruction, @OCR, @ocrParam, @QRCode, @qrcodeParam, @Measure, @measureParam, @Resultado, @Aprov, @Status)";
+                "INSERT INTO OperacoesResultados(cod_ordemDeManutencao, cod_operacaoResultado, instrucao, ocr, ocrParametro, qrcode, qrcodeParametro, medicao, medicaoParametro, resultado, status_aprovacao, status) VALUES (@OMCode, @OpCode, @Instruction, @OCR, @ocrParam, @QRCode, @qrcodeParam, @Measure, @measureParam, @Resultado, @Aprov, @Status)";
 
             if (op.QRCodeParameter == DBNull.Value.ToString() || op.QRCodeParameter == null)
                 op.QRCodeParameter = "Parâmetro não requisitado";
@@ -105,6 +82,7 @@ public class FinishOrder : MonoBehaviour
             // Giving all parameters and publishing it
             using SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@OpCode", op.OperationCode);
+            command.Parameters.AddWithValue("@OMCode", StartOrder.ActiveOrder.OrderCode);
             command.Parameters.AddWithValue("@Instruction", op.Instruction);
             command.Parameters.AddWithValue("@OCR", op.OCR);
             command.Parameters.AddWithValue("@ocrParam", op.OCRParameter);

@@ -188,16 +188,13 @@ public class GetAllOrders : MonoBehaviour
 
     public void GetBackToAllOrders()
     {
-        instructionPlate.SetActive(true);
-        infoPlate.SetActive(false);
+        instructionPlate.SetActive(false);
+        infoPlate.SetActive(true);
     }
 
     public void GetOrderDataOne()
     {
         DataTable localDataTable = new DataTable();
-
-        instructionPlate.SetActive(false);
-        infoPlate.SetActive(true);
 
         try
         {
@@ -219,7 +216,7 @@ public class GetAllOrders : MonoBehaviour
                 localDataTable.Load(reader);
             }
 
-            // Loop to add all data to a List<Orders>
+// Loop to add all data to a List<Orders>
             foreach (DataRow item in localDataTable.Rows)
             {
                 try
@@ -232,6 +229,33 @@ public class GetAllOrders : MonoBehaviour
 
                     instruction.text = "Equipamento " + order.EquipmentCode + "\nPrazo: " +
                                        order.OrderDate.ToString("dd/MM/yyyy HH:mm") + "\nTipo: " + order.Type;
+
+                    if (CheckMaintenanceOrder())
+                    {
+                        string[] s = GetOperations(order);
+
+                        StartOrder.ActiveOrder = new Orders
+                        {
+                            Type = ordersList[counter].Type,
+                            OrderCode = ordersList[counter].OrderCode,
+                            StartDate = ordersList[counter].StartDate,
+                            FinishDate = ordersList[counter].FinishDate,
+                            TotalTime = ordersList[counter].TotalTime,
+                            Approval = ordersList[counter].Approval,
+                            ApprovalDate = ordersList[counter].ApprovalDate
+                        };
+
+                        StartOrder.ActiveOrder = order;
+                        OMCode = order.OrderCode;
+                        SelectOrder();
+                    }
+                    else
+                    {
+                        SetFirstOrderOnPanel();
+                        GetOrdersByUser();
+
+                        failurePlate.SetActive(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -254,9 +278,6 @@ public class GetAllOrders : MonoBehaviour
     {
         DataTable localDataTable = new DataTable();
 
-        instructionPlate.SetActive(false);
-        infoPlate.SetActive(true);
-
         try
         {
             // Connecting to database
@@ -277,7 +298,7 @@ public class GetAllOrders : MonoBehaviour
                 localDataTable.Load(reader);
             }
 
-            // Loop to add all data to a List<Orders>
+// Loop to add all data to a List<Orders>
             foreach (DataRow item in localDataTable.Rows)
             {
                 try
@@ -290,6 +311,33 @@ public class GetAllOrders : MonoBehaviour
 
                     instruction.text = "Equipamento " + order.EquipmentCode + "\nPrazo: " +
                                        order.OrderDate.ToString("dd/MM/yyyy HH:mm") + "\nTipo: " + order.Type;
+
+                    if (CheckMaintenanceOrder())
+                    {
+                        string[] s = GetOperations(order);
+
+                        StartOrder.ActiveOrder = new Orders
+                        {
+                            Type = ordersList[counter].Type,
+                            OrderCode = ordersList[counter].OrderCode,
+                            StartDate = ordersList[counter].StartDate,
+                            FinishDate = ordersList[counter].FinishDate,
+                            TotalTime = ordersList[counter].TotalTime,
+                            Approval = ordersList[counter].Approval,
+                            ApprovalDate = ordersList[counter].ApprovalDate
+                        };
+
+                        StartOrder.ActiveOrder = order;
+                        OMCode = order.OrderCode;
+                        SelectOrder();
+                    }
+                    else
+                    {
+                        SetFirstOrderOnPanel();
+                        GetOrdersByUser();
+
+                        failurePlate.SetActive(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -312,9 +360,6 @@ public class GetAllOrders : MonoBehaviour
     {
         DataTable localDataTable = new DataTable();
 
-        instructionPlate.SetActive(false);
-        infoPlate.SetActive(true);
-
         try
         {
             // Connecting to database
@@ -335,7 +380,7 @@ public class GetAllOrders : MonoBehaviour
                 localDataTable.Load(reader);
             }
 
-            // Loop to add all data to a List<Orders>
+// Loop to add all data to a List<Orders>
             foreach (DataRow item in localDataTable.Rows)
             {
                 try
@@ -348,6 +393,33 @@ public class GetAllOrders : MonoBehaviour
 
                     instruction.text = "Equipamento " + order.EquipmentCode + "\nPrazo: " +
                                        order.OrderDate.ToString("dd/MM/yyyy HH:mm") + "\nTipo: " + order.Type;
+
+                    if (CheckMaintenanceOrder())
+                    {
+                        string[] s = GetOperations(order);
+
+                        StartOrder.ActiveOrder = new Orders
+                        {
+                            Type = ordersList[counter].Type,
+                            OrderCode = ordersList[counter].OrderCode,
+                            StartDate = ordersList[counter].StartDate,
+                            FinishDate = ordersList[counter].FinishDate,
+                            TotalTime = ordersList[counter].TotalTime,
+                            Approval = ordersList[counter].Approval,
+                            ApprovalDate = ordersList[counter].ApprovalDate
+                        };
+
+                        StartOrder.ActiveOrder = order;
+                        OMCode = order.OrderCode;
+                        SelectOrder();
+                    }
+                    else
+                    {
+                        SetFirstOrderOnPanel();
+                        GetOrdersByUser();
+
+                        failurePlate.SetActive(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -370,9 +442,6 @@ public class GetAllOrders : MonoBehaviour
     {
         DataTable localDataTable = new DataTable();
 
-        instructionPlate.SetActive(false);
-        infoPlate.SetActive(true);
-
         try
         {
             // Connecting to database
@@ -393,7 +462,7 @@ public class GetAllOrders : MonoBehaviour
                 localDataTable.Load(reader);
             }
 
-            // Loop to add all data to a List<Orders>
+// Loop to add all data to a List<Orders>
             foreach (DataRow item in localDataTable.Rows)
             {
                 try
@@ -406,6 +475,33 @@ public class GetAllOrders : MonoBehaviour
 
                     instruction.text = "Equipamento " + order.EquipmentCode + "\nPrazo: " +
                                        order.OrderDate.ToString("dd/MM/yyyy HH:mm") + "\nTipo: " + order.Type;
+
+                    if (CheckMaintenanceOrder())
+                    {
+                        string[] s = GetOperations(order);
+
+                        StartOrder.ActiveOrder = new Orders
+                        {
+                            Type = ordersList[counter].Type,
+                            OrderCode = ordersList[counter].OrderCode,
+                            StartDate = ordersList[counter].StartDate,
+                            FinishDate = ordersList[counter].FinishDate,
+                            TotalTime = ordersList[counter].TotalTime,
+                            Approval = ordersList[counter].Approval,
+                            ApprovalDate = ordersList[counter].ApprovalDate
+                        };
+
+                        StartOrder.ActiveOrder = order;
+                        OMCode = order.OrderCode;
+                        SelectOrder();
+                    }
+                    else
+                    {
+                        SetFirstOrderOnPanel();
+                        GetOrdersByUser();
+
+                        failurePlate.SetActive(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -427,9 +523,6 @@ public class GetAllOrders : MonoBehaviour
     public void GetOrderDataFive()
     {
         DataTable localDataTable = new DataTable();
-
-        instructionPlate.SetActive(false);
-        infoPlate.SetActive(true);
 
         try
         {
@@ -464,6 +557,33 @@ public class GetAllOrders : MonoBehaviour
 
                     instruction.text = "Equipamento " + order.EquipmentCode + "\nPrazo: " +
                                        order.OrderDate.ToString("dd/MM/yyyy HH:mm") + "\nTipo: " + order.Type;
+
+                    if (CheckMaintenanceOrder())
+                    {
+                        string[] s = GetOperations(order);
+
+                        StartOrder.ActiveOrder = new Orders
+                        {
+                            Type = ordersList[counter].Type,
+                            OrderCode = ordersList[counter].OrderCode,
+                            StartDate = ordersList[counter].StartDate,
+                            FinishDate = ordersList[counter].FinishDate,
+                            TotalTime = ordersList[counter].TotalTime,
+                            Approval = ordersList[counter].Approval,
+                            ApprovalDate = ordersList[counter].ApprovalDate
+                        };
+
+                        StartOrder.ActiveOrder = order;
+                        OMCode = order.OrderCode;
+                        SelectOrder();
+                    }
+                    else
+                    {
+                        SetFirstOrderOnPanel();
+                        GetOrdersByUser();
+
+                        failurePlate.SetActive(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -679,34 +799,8 @@ public class GetAllOrders : MonoBehaviour
 
     public void SelectOrder()
     {
-        if (CheckMaintenanceOrder())
-        {
-            string[] s = GetOperations(ordersList[counter]);
-
-            StartOrder.ActiveOrder = new Orders
-            {
-                Type = ordersList[counter].Type,
-                OrderCode = ordersList[counter].OrderCode,
-                StartDate = ordersList[counter].StartDate,
-                FinishDate = ordersList[counter].FinishDate,
-                TotalTime = ordersList[counter].TotalTime,
-                Approval = ordersList[counter].Approval,
-                ApprovalDate = ordersList[counter].ApprovalDate
-            };
-
-            StartOrder.ActiveOrder = ordersList[counter];
-            OMCode = ordersList[counter].OrderCode;
-            ChangeMaintenanceOrderSituation();
-
-            SceneManager.LoadScene("Operations");
-        }
-        else
-        {
-            GetOrdersByUser();
-            SetFirstOrderOnPanel();
-
-            failurePlate.SetActive(true);
-        }
+        ChangeMaintenanceOrderSituation();
+        SceneManager.LoadScene("Operations");
     }
 
     private bool CheckMaintenanceOrder()

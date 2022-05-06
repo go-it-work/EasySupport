@@ -6,17 +6,18 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.MixedReality.Toolkit;
 using MySql.Data.MySqlClient;
-using Nest;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
+using Transform = Nest.Transform;
 
 public class StartOrder : MonoBehaviour
 {
     public static Orders ActiveOrder;
     [SerializeField] private GameObject slider;
+    [SerializeField] private GameObject epiParent;
 
     public DataTable operationTable = new DataTable();
     public static List<Operations> operationsList = new List<Operations>();
@@ -393,6 +394,7 @@ public class StartOrder : MonoBehaviour
 
     private void SetUpScene()
     {
+        DestroyAllEpis();
         fraction = 0 + fraction/operationsList.Count;
 
         // Getting all functions the scene need
@@ -434,6 +436,8 @@ public class StartOrder : MonoBehaviour
 
     public void MoveToNextOperation()
     {
+        DestroyAllEpis();
+
         counter++;
 
         if (counter + 1> operationsList.Count)
@@ -531,6 +535,8 @@ public class StartOrder : MonoBehaviour
 
     public void MoveToPreviousOperation()
     {
+        DestroyAllEpis();
+
         counter = counter - 1;
 
         if (counter > operationsList.Count)
@@ -718,28 +724,9 @@ public class StartOrder : MonoBehaviour
 
     private void DestroyAllEpis()
     {
-        try
+        foreach (UnityEngine.Transform t in epiParent.transform)
         {
-            foreach (var objects in epis.GetComponentsInParent<GameObject>())
-            {
-                Destroy(objects);
-            }
-        }
-        catch(Exception e)
-        {
-            Debug.Log(e);
-        }
-
-        try
-        {
-            foreach (var objects in epis.GetComponentsInParent<GameObject>())
-            {
-                Destroy(objects);
-            }
-        }
-        catch(Exception e)
-        {
-            Debug.Log(e);
+            Destroy(t.gameObject);
         }
     }
 
@@ -755,7 +742,7 @@ public class StartOrder : MonoBehaviour
             var gameObject = Resources.Load(localList[i]) as GameObject;
 
             Vector3 position = new Vector3(x_Start + (x_Space * (i % ColumnLength)), y_Start + (-y_Space * (i / ColumnLength)), 0.5f);
-            Instantiate(Resources.Load(localList[i]), position, gameObject.transform.rotation);
+            Instantiate(Resources.Load(localList[i]), position, gameObject.transform.rotation, epiParent.transform);
         }
     }
 
